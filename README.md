@@ -74,7 +74,7 @@ carton install
 # Connecting to the Azure SQL
 
 ```
-carton exec connect.pl server_name db_name username password
+carton exec ./connect.pl server_name db_name username password
 ```
 Will create a table and insert some rows in it. You're done! Happy Hacking
 
