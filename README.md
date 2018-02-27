@@ -76,7 +76,12 @@ carton install
 ```
 carton exec ./connect.pl server_name db_name username password
 ```
-Will create a table and insert some rows in it. You're done! Happy Hacking
+Will create a table and insert some rows in it. It will work if you point the script to either 
+an Azure SQL Database or an Azure SQL data warehouse.
+
+You're done! Happy Hacking.
+
+Remember to delete the Resource Group for all your stuff to be cleaned up ;)
 
 # Additional notes
 
