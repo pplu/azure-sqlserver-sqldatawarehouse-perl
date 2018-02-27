@@ -132,9 +132,9 @@ ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.1.so.9.2 | grep "not found"
 
 gave away the problem. The "not found" was due to other .so's missing (not the 
 libmsodbcsql-13.1.so.9.2 itself). The problem was that I had installed the ODBC driver 
-from the the Debian 8 repositorios on Debian 9 because I had mis-copied the Debian 
+from the the Debian 8 repositories on Debian 9 because I had mis-copied the Debian 
 apt repo paths (ups!). I'm documenting this because I suspect this can happen to anyone, 
-hoping that Google will index it to help.
+hoping that Google will index it high enough for it to be found easily.
 
 # Additional links that helped me get this running:
 
@@ -156,6 +156,6 @@ This article was authored by Jose Luis Martinez Torres
 
 This article is (c) 2018 CAPSiDE, Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
-The canonical, up-to-date source is [GitHub](https://github.com/pplu/perl-mssql-server.git). Feel free to
+The canonical, up-to-date source is [GitHub](https://github.com/pplu/azure-sqlserver-sqldatawarehouse-perl). Feel free to
 contribute back
 
