@@ -30,7 +30,7 @@ official MS ODBC driver.
 
 # Preparing the environment:
 
-The base for the article is an Azure Debian 9 VM as provided by Azure. Provision a Debian 9
+The base for the article is an Azure Debian 8 (jessie) VM as provided by Azure. Provision a Debian 8
 VM inside a new Resource Group. Also provision an SQL Database and an SQL data warehouse in
 the same Resource Group (this is basically so we can clean up without hassle). Once we have
 the two databases provisioned, we have to open their firewall rules to permit the IP of the
@@ -39,9 +39,9 @@ the usernames and the passwords for the databases.
 
 Now log in to the Debian VM:
 
-We'll use Perls' carton bundler to install the latest versions of some dependencies (DBI, DBD::ODBC) in a local directory (so it doesn't mess up the system). Also we'll need git to download our sample script
+We'll use Perls' carton bundler to install the latest versions of some dependencies (DBI, DBD::ODBC) in a local directory (so it doesn't mess up the system). Also we'll need git to download our sample script and build-essential because we'll be compiling some of the Perl modules
 ```
-sudo apt-get install -y carton git 
+sudo apt-get install -y carton git build-essential
 ```
 
 We'll need the UNIX ODBC library, and its' dev package (to compile the DBD::ODBC module)
@@ -55,7 +55,7 @@ Now we'll need to install the Microsoft ODBC driver. [Debian packages](https://d
 sudo su -
 apt-get install -y apt-transport-https
 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list
 apt-get update
 ACCEPT_EULA=Y apt-get install msodbcsql
 exit
@@ -112,6 +112,15 @@ If you don't want to uninstall libodbc2, just take a look at
 sudo apt-get remove --purge libiodbc2
 ```
 
+## Why didn't you use Debian 9 (stretch)?
+
+I didn't use Debian 9 (stretch) because the msodbcsql package isn't there (although it's
+announced to be released). This seems like a transitive problem with the Microsoft Debian 
+repos, but I've prefered to document a working solution. You should be able to do the 
+same steps on Debian 9 (with the precaution of changing the 8 for a 9 when configuring the Debian repos).
+If you don't the following error will happen.
+
+
 ## Can't open lib libmsodbcsql: file not found (SQL-01000) error
 
 I was getting this error when connecting:
@@ -136,6 +145,21 @@ from the the Debian 8 repositories on Debian 9 because I had mis-copied the Debi
 apt repo paths (ups!). I'm documenting this because I suspect this can happen to anyone, 
 hoping that Google will index it high enough for it to be found easily.
 
+# Can you get the Debian 8 msodbcsql package to work on Debian 9?
+
+You can install the Debian 8 msodbcsql package on Debian 9 just using the Microsoft repositiores
+for Debian 8, but as you know from the last paragraph, it's broken.
+You can rest your system into submission by installing the libssl package that belongs to Debian 8
+(which has the appropiate missing libraries).
+
+```
+wget http://ftp.de.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.2l-1~bpo8+1_amd64.deb
+sudo dpkg -i libssl1.0.0_1.0.2l-1~bpo8+1_amd64.deb
+```
+
+I really don't know what sort of pain is in for you if you do this. The example script works,
+but there may be dragons down the road. You've been warned.
+
 # Additional links that helped me get this running:
 
 https://github.com/pplu/perl-mssql-server
@@ -156,6 +180,5 @@ This article was authored by Jose Luis Martinez Torres
 
 This article is (c) 2018 CAPSiDE, Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
-The canonical, up-to-date source is [GitHub](https://github.com/pplu/azure-sqlserver-sqldatawarehouse-perl). Feel free to
-contribute back
+The canonical, up-to-date source is [GitHub](https://github.com/pplu/azure-sqlserver-sqldatawarehouse-perl). Feel free to contribute back
 
