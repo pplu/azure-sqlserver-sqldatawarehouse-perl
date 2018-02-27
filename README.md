@@ -53,7 +53,7 @@ Now we'll need to install the Microsoft ODBC driver. [Debian packages](https://d
 
 ```
 sudo su -
-apt-get install -y apt-transport-https
+apt-get install -y apt-transport-https curl
 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list
 apt-get update
