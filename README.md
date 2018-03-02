@@ -2,14 +2,14 @@
 
 Azure SQL Database and Azure SQL DataWarehouse are two Azure services that are
 based on SQL Server tecnology. The databases are hosted and managed by Azure, 
-so you don't have to worry about installing Microsofts' SQL Server on a VM.
+so, you don't have to worry about installing Microsofts' SQL Server on a VM.
 
 Hosted database services are part of what makes Cloud attractive to me. In the
-traditional infrastructure world you have one big (and redundant) database server
-where everything goes. In the cloud you can have one small database server for each
+traditional infrastructure world, you have one big (and redundant) database server
+where everything goes. In the cloud, you can have one small database server for each
 project, since things like PITR and backups are built-in. 
 
-One of Azures' most mature offerings is Azure SQL Database. Finding documentation
+One of Azure's most mature offerings is Azure SQL Database. Finding documentation
 on how to consume some traditionally Windows-centric services for some environments
 is sometimes challenging, so this article will guide you for connecting to the 
 Azure Database service from Perl.
@@ -18,13 +18,13 @@ Note: this article is specific for the Azure hosted cloud services. If you're lo
 for connecting to a traditional SQL Server, [this](https://github.com/pplu/perl-mssql-server)
 may help.
 
-# Some backgroud
+# Some background
 
 Connecting from a Linux environment to SQL Server is traditionally done via the ODBC (Open
 Database Connectivity) API. This API defines a common API for programming languages to bind
-to, letting the details of how to talk to the database be dealt with drivers. Traditionally
+to, letting the details of how to talk to the database be dealt with drivers. Traditionally,
 there was an Open Source project called FreeTDS which provided an ODBC interface, with nothing
-official from Microsoft. But times change, and Microsoft released recently an ODBC driver for SQL
+official from Microsoft. But times change and Microsoft released recently an ODBC driver for SQL
 Server for Linux and MacOS environments. So we'll go full speed in this article using the
 official MS ODBC driver.
 
@@ -33,13 +33,13 @@ official MS ODBC driver.
 The base for the article is an Azure Debian 8 (jessie) VM as provided by Azure. Provision a Debian 8
 VM inside a new Resource Group. Also provision an SQL Database and an SQL data warehouse in
 the same Resource Group (this is basically so we can clean up without hassle). Once we have
-the two databases provisioned, we have to open their firewall rules to permit the IP of the
+the two databases provisioned, we must open their firewall rules to permit the IP of the
 VM we have created. Please take good note of the server name, the names of the dbs you've created,
 the usernames and the passwords for the databases.
 
 Now log in to the Debian VM:
 
-We'll use Perls' carton bundler to install the latest versions of some dependencies (DBI, DBD::ODBC) in a local directory (so it doesn't mess up the system). Also we'll need git to download our sample script and build-essential because we'll be compiling some of the Perl modules
+We'll use Perl's carton bundler to install the latest versions of some dependencies (DBI, DBD::ODBC) in a local directory (so it doesn't mess up the system). Also, we'll need git to download our sample script and build-essential because we'll be compiling some of the Perl modules
 ```
 sudo apt-get install -y carton git build-essential
 ```
@@ -123,7 +123,7 @@ I didn't use Debian 9 (stretch) because the msodbcsql package isn't there (altho
 announced to be released). This seems like a transitive problem with the Microsoft Debian 
 repos, but I've prefered to document a working solution. You should be able to do the 
 same steps on Debian 9 (with the precaution of changing the 8 for a 9 when configuring the Debian repos).
-If you don't the following error will happen.
+If you don't, the following error will happen.
 
 
 ## Can't open lib libmsodbcsql: file not found (SQL-01000) error
@@ -181,9 +181,9 @@ https://www.connectionstrings.com/sql-server/
 
 # Author, Copyright and License
 
-This article was authored by Jose Luis Martinez Torres
+This article was authored by Jose Luis Martinez Torres.
 
-This article is (c) 2018 CAPSiDE, Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+This article is (c) 2018 CAPSiDE, Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-The canonical, up-to-date source is [GitHub](https://github.com/pplu/azure-sqlserver-sqldatawarehouse-perl). Feel free to contribute back
+The canonical, up-to-date source is [GitHub](https://github.com/pplu/azure-sqlserver-sqldatawarehouse-perl). Feel free to contribute back.
 
