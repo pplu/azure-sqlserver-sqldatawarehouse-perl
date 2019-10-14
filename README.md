@@ -1,7 +1,7 @@
 # Using Azure SQL Database and Azure SQL DataWarehouse with Perl
 
 Azure SQL Database and Azure SQL DataWarehouse are two Azure services that are
-based on SQL Server tecnology. The databases are hosted and managed by Azure, 
+based on SQL Server technology. The databases are hosted and managed by Azure, 
 so, you don't have to worry about installing Microsofts' SQL Server on a VM.
 
 Hosted database services are part of what makes Cloud attractive to me. In the
@@ -22,29 +22,34 @@ may help.
 
 Connecting from a Linux environment to SQL Server is traditionally done via the ODBC (Open
 Database Connectivity) API. This API defines a common API for programming languages to bind
-to, letting the details of how to talk to the database be dealt with drivers. Traditionally,
-there was an Open Source project called FreeTDS which provided an ODBC interface, with nothing
+to, letting the details of how to talk to the database be dealt with drivers. 
+
+Traditionally, there was an Open Source project called FreeTDS which provided an ODBC interface, with nothing
 official from Microsoft. But times change and Microsoft released recently an ODBC driver for SQL
+
 Server for Linux and MacOS environments. So we'll go full speed in this article using the
 official MS ODBC driver.
 
 # Preparing the environment:
 
-The base for the article is an Azure Debian 8 (jessie) VM as provided by Azure. Provision a Debian 8
-VM inside a new Resource Group. Also provision an SQL Database and an SQL data warehouse in
-the same Resource Group (this is basically so we can clean up without hassle). Once we have
-the two databases provisioned, we must open their firewall rules to permit the IP of the
+The base for the article is an Azure Debian 8 (Jessie) VM as provided by Azure. 
+
+Provision a Debian 8 VM inside a new Resource Group. Also provision an SQL Database and an SQL data warehouse in
+the same Resource Group (this is basically so we can clean up without hassle). 
+
+Once we have the two databases provisioned, we have to open their firewall rules to permit the IP of the
 VM we have created. Please take good note of the server name, the names of the dbs you've created,
 the usernames and the passwords for the databases.
 
 Now log in to the Debian VM:
 
-We'll use Perl's carton bundler to install the latest versions of some dependencies (DBI, DBD::ODBC) in a local directory (so it doesn't mess up the system). Also, we'll need git to download our sample script and build-essential because we'll be compiling some of the Perl modules
+We'll use Perl's Carton bundler to install the latest versions of some dependencies (DBI, DBD::ODBC) in a local directory (so it doesn't mess up the system). Also we'll need git to download our sample script and build-essential because we'll be compiling some of the Perl modules
+
 ```
 sudo apt-get install -y carton git build-essential
 ```
 
-We'll need the UNIX ODBC library, and its' dev package (to compile the DBD::ODBC module)
+We'll need the UNIX ODBC library, and its' dev package (to compile the DBD::ODBC module).
 ```
 sudo apt-get install -y unixodbc unixodbc-dev
 ```
@@ -61,12 +66,12 @@ ACCEPT_EULA=Y apt-get install msodbcsql
 exit
 ```
 
-Now we'll download the example script from this repo
+Now we'll download the example script from this repo:
 ```
 git clone https://github.com/pplu/azure-sqlserver-sqldatawarehouse-perl.git
 cd azure-sqlserver-sqldatawarehouse-perl
 ```
-Now install the local dependencies with carton (they are in the cpanfile of the repository)
+Now install the local dependencies with carton (they are in the cpanfile of the repository).
 ```
 carton install
 ```
@@ -121,8 +126,9 @@ sudo apt-get remove --purge libiodbc2
 
 I didn't use Debian 9 (stretch) because the msodbcsql package isn't there (although it's
 announced to be released). This seems like a transitive problem with the Microsoft Debian 
-repos, but I've prefered to document a working solution. You should be able to do the 
-same steps on Debian 9 (with the precaution of changing the 8 for a 9 when configuring the Debian repos).
+repos, but I've prefered to document a working solution. 
+
+You should be able to do the same steps on Debian 9 (with the precaution of changing the 8 for a 9 when configuring the Debian repos).
 If you don't, the following error will happen.
 
 
